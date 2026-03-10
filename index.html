@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summary ch1 prob</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ===================== RESET & BASE ===================== */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --ink:      #1c2340;
+  --ink2:     #3d4a6b;
+  --navy:     #0e1e40;
+  --blue:     #1b4fa8;
+  --lblue:    #e8f0fc;
+  --gold:     #d4860a;
+  --lgold:    #fff6e0;
+  --green:    #1a7a4a;
+  --lgreen:   #e6f7ee;
+  --red:      #b92a2a;
+  --lred:     #fff0f0;
+  --teal:     #0e7c6e;
+  --lteal:    #e6f7f5;
+  --gray:     #f4f5f8;
+  --border:   #d8dde8;
+  --white:    #ffffff;
+  --radius:   14px;
+  --shadow:   0 2px 16px rgba(14,30,64,.09);
+  --shadow2:  0 4px 28px rgba(14,30,64,.14);
+}
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: #eef1f9;
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 2;
+}
+
+/* ===================== PRINT ===================== */
+@media print {
+  body { background:#fff; font-size:12pt; }
+  .no-print { display:none !important; }
+  .page-break { page-break-before: always; }
+  .card, .ex-box, .thm, .def, .tip { break-inside: avoid; }
+  * { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+
+/* ===================== HEADER ===================== */
+.hdr {
+  background: var(--navy);
+  color: #fff;
+  padding: 52px 24px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hdr::before {
+  content: 'P(A)';
+  position:absolute; left:32px; bottom:-16px;
+  font-size:140px; font-weight:900; opacity:.05; letter-spacing:-4px;
+  color:#fff; pointer-events:none;
+}
+.hdr-chip {
+  display:inline-block;
+  background:var(--gold); color:var(--navy);
+  font-weight:900; font-size:13px; padding:4px 18px;
+  border-radius:20px; margin-bottom:16px; letter-spacing:.5px;
+}
+.hdr h1 { font-size:clamp(26px,5vw,48px); font-weight:900; margin-bottom:10px; }
+.hdr p  { font-size:17px; opacity:.8; max-width:600px; margin:0 auto 18px; line-height:1.9; }
+.hdr-by {
+  display:inline-block;
+  border:2px solid rgba(255,255,255,.25);
+  padding:7px 28px; border-radius:30px;
+  font-weight:700; font-size:15px; color:#fff;
+}
+
+/* ===================== CONTENTS BAR ===================== */
+.toc {
+  background: var(--blue);
+  padding:20px 24px;
+  text-align:center;
+}
+.toc-title { color:rgba(255,255,255,.6); font-size:13px; font-weight:700; margin-bottom:12px; letter-spacing:1px; }
+.toc-tags { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
+.toc-tag {
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+  color:#dce8ff; padding:5px 16px; border-radius:20px;
+  font-size:13px; font-weight:600;
+}
+
+/* ===================== LAYOUT ===================== */
+.wrap { max-width:920px; margin:0 auto; padding:0 18px; }
+.body  { padding:44px 18px 72px; }
+.sec  { margin-bottom:64px; }
+
+/* section heading */
+.sec-head {
+  display:flex; align-items:center; gap:14px;
+  margin-bottom:26px; padding-bottom:14px;
+  border-bottom:3px solid var(--gold);
+}
+.sec-num {
+  min-width:52px; height:52px;
+  background:var(--navy); color:#fff;
+  border-radius:12px; display:flex;
+  align-items:center; justify-content:center;
+  font-weight:900; font-size:19px;
+  box-shadow:var(--shadow2);
+  flex-shrink:0;
+}
+.sec-ttl  { font-size:clamp(19px,3.5vw,26px); font-weight:900; color:var(--navy); }
+.sec-sub  { font-size:14px; color:var(--ink2); margin-top:2px; }
+
+/* ===================== CARD ===================== */
+.card {
+  background:var(--white);
+  border-radius:var(--radius);
+  padding:24px 28px;
+  margin-bottom:20px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+}
+.card-ttl {
+  font-weight:800; font-size:17px; color:var(--blue);
+  margin-bottom:12px; display:flex; align-items:center; gap:10px;
+}
+.ic { font-size:22px; }
+
+/* ===================== TIPS / CALLOUTS ===================== */
+.tip {
+  border-radius:12px; padding:16px 20px; margin:18px 0;
+  display:flex; gap:14px; align-items:flex-start;
+}
+.tip .ti { font-size:24px; flex-shrink:0; line-height:1.4; }
+.tip .tb .tl { font-weight:800; font-size:15px; margin-bottom:5px; }
+
+.tip.blue  { background:var(--lblue); border-right:5px solid var(--blue); }
+.tip.blue  .tl { color:var(--blue); }
+.tip.gold  { background:var(--lgold); border-right:5px solid var(--gold); }
+.tip.gold  .tl { color:var(--gold); }
+.tip.green { background:var(--lgreen); border-right:5px solid var(--green); }
+.tip.green .tl { color:var(--green); }
+.tip.red   { background:var(--lred);   border-right:5px solid var(--red); }
+.tip.red   .tl { color:var(--red); }
+.tip.teal  { background:var(--lteal);  border-right:5px solid var(--teal); }
+.tip.teal  .tl { color:var(--teal); }
+.tip.gray  { background:var(--gray);   border-right:5px solid #8898bb; }
+.tip.gray  .tl { color:var(--ink2); }
+
+/* ===================== DEF BOX ===================== */
+.def {
+  background:var(--navy); color:#fff;
+  border-radius:var(--radius); padding:22px 26px;
+  margin:20px 0; position:relative; overflow:hidden;
+}
+.def::before {
+  content:'تعريف';
+  position:absolute; top:10px; left:14px;
+  background:var(--gold); color:var(--navy);
+  font-size:11px; font-weight:900;
+  padding:2px 12px; border-radius:10px;
+}
+.def-body { margin-top:22px; font-size:16px; line-height:2.1; }
+.def-formula {
+  text-align:center; font-size:clamp(20px,3.5vw,30px);
+  font-weight:700; margin:14px 0 8px; letter-spacing:.5px;
+  direction:ltr;
+}
+
+/* ===================== FORMULA ===================== */
+.fml {
+  background:var(--navy);
+  border:2px solid var(--gold);
+  border-radius:var(--radius);
+  padding:22px 24px; margin:20px 0; text-align:center;
+}
+.fml-lbl { color:var(--gold); font-weight:800; font-size:13px; margin-bottom:10px; letter-spacing:.5px; }
+.fml-eq  { color:#fff; font-size:clamp(18px,3vw,28px); font-weight:700; direction:ltr; line-height:1.9; }
+.fml-note{ color:#afc5ef; font-size:14px; margin-top:10px; line-height:1.8; }
+
+/* ===================== THEOREM ===================== */
+.thm { background:var(--white); border-radius:var(--radius); margin:20px 0; overflow:hidden; box-shadow:var(--shadow); border:1px solid var(--border); }
+.thm-hd {
+  background:linear-gradient(90deg,#1b4fa8,#3570d4);
+  color:#fff; padding:13px 22px;
+  font-weight:800; font-size:16px;
+  display:flex; align-items:center; gap:10px;
+}
+.thm-hd.purple { background:linear-gradient(90deg,#4c2fa0,#7c5cd4); }
+.thm-hd.teal   { background:linear-gradient(90deg,#0a6e60,#1aaa90); }
+.thm-bd { padding:20px 24px; }
+
+/* ===================== EXAMPLE ===================== */
+.ex-box { background:var(--white); border-radius:var(--radius); margin:20px 0; overflow:hidden; box-shadow:var(--shadow); border:1px solid var(--border); }
+.ex-hd  {
+  background:var(--blue); color:#fff;
+  padding:13px 22px; font-weight:800; font-size:15px;
+  display:flex; align-items:center; gap:10px;
+}
+.ex-num { background:var(--gold); color:var(--navy); padding:2px 12px; border-radius:12px; font-size:13px; font-weight:900; }
+.ex-bd  { padding:20px 24px; }
+.ex-q   { font-weight:700; color:var(--navy); padding-bottom:13px; margin-bottom:13px; border-bottom:2px dashed var(--border); line-height:1.9; }
+.sol-tag{ display:inline-block; background:var(--lgreen); color:var(--green); font-weight:800; font-size:13px; padding:3px 14px; border-radius:10px; margin-bottom:11px; }
+
+/* ===================== GRID ===================== */
+.g2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.g3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+@media(max-width:640px){ .g2,.g3{ grid-template-columns:1fr; } }
+
+/* ===================== STEPS ===================== */
+.steps { list-style:none; }
+.step  { display:flex; gap:14px; align-items:flex-start; padding:12px 0; border-bottom:1px dashed var(--border); }
+.step:last-child { border-bottom:none; }
+.s-num { min-width:34px; height:34px; background:var(--gold); color:var(--navy); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px; flex-shrink:0; margin-top:3px; }
+
+/* ===================== SAMPLE SPACE ===================== */
+.ss {
+  background:var(--navy); color:#fff;
+  border-radius:12px; padding:16px 20px;
+  font-size:17px; font-weight:700;
+  direction:ltr; text-align:center;
+  margin:14px 0; letter-spacing:.5px;
+  line-height:1.9;
+}
+.ss .ss-lbl { font-size:12px; color:var(--gold); font-weight:700; direction:rtl; margin-bottom:6px; display:block; text-align:right; }
+
+/* ===================== TABLE ===================== */
+.tbl { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; box-shadow:var(--shadow); margin:14px 0; font-size:15px; }
+.tbl th { background:var(--blue); color:#fff; padding:11px 14px; text-align:center; font-weight:700; }
+.tbl td { padding:10px 14px; text-align:center; border-bottom:1px solid var(--border); background:#fff; }
+.tbl .trow td { background:#eef4ff; font-weight:800; color:var(--blue); }
+
+/* ===================== PILL ===================== */
+.pill { display:inline-block; padding:3px 13px; border-radius:20px; font-size:13px; font-weight:700; margin:2px; }
+.pb { background:var(--lblue);  color:var(--blue); }
+.pg { background:var(--lgreen); color:var(--green); }
+.po { background:var(--lgold);  color:var(--gold); }
+.pr { background:var(--lred);   color:var(--red); }
+
+/* ===================== DIVIDER ===================== */
+.div { height:3px; background:linear-gradient(90deg,var(--gold),transparent); border:none; border-radius:2px; margin:52px 0 32px; }
+
+/* ===================== SUMMARY ===================== */
+.sum { background:linear-gradient(135deg,#eef3ff,#e0e9ff); border:2px solid #c4d4f4; border-radius:18px; padding:28px 30px; margin:30px 0; }
+.sum h3 { font-size:19px; font-weight:900; color:var(--navy); margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+.sum-list { list-style:none; }
+.sum-list li { padding:10px 0; border-bottom:1px dashed #c4d4f4; display:flex; gap:12px; align-items:flex-start; font-size:15px; }
+.sum-list li:last-child { border-bottom:none; }
+.sum-list .bul { color:var(--gold); font-size:20px; }
+
+/* ===================== FOOTER ===================== */
+.ftr { background:var(--navy); color:#6a7fa8; text-align:center; padding:30px 20px; font-size:14px; }
+.ftr .au { font-size:20px; font-weight:900; color:var(--gold); margin-bottom:6px; }
+
+/* term blocks */
+.term {
+  background:#fff; border-radius:12px; padding:18px 20px;
+  border-top:4px solid var(--blue); box-shadow:var(--shadow);
+  border:1px solid var(--border); border-top-width:4px;
+  margin-bottom:16px;
+}
+.term-nm { font-weight:900; font-size:17px; color:var(--blue); margin-bottom:8px; }
+.term-en { font-size:12px; background:var(--lblue); color:var(--blue); padding:2px 10px; border-radius:8px; font-weight:600; direction:ltr; display:inline-block; margin-right:6px; }
+
+/* axiom list */
+.ax-list { list-style:none; }
+.ax-item { display:flex; gap:14px; align-items:flex-start; padding:14px 0; border-bottom:1px solid var(--border); }
+.ax-item:last-child { border-bottom:none; }
+.ax-n { min-width:38px; height:38px; background:var(--blue); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px; flex-shrink:0; }
+.ax-f { font-size:18px; font-weight:700; color:var(--blue); direction:ltr; background:var(--lblue); border-radius:8px; padding:4px 14px; display:inline-block; margin-top:6px; }
+
+/* venn row */
+.venn-row { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin:18px 0; }
+.venn-item { text-align:center; }
+.venn-lbl { font-size:13px; font-weight:700; color:var(--ink2); margin-top:6px; }
+
+/* highlight */
+.hl  { background:#fff6cc; padding:1px 6px; border-radius:5px; font-weight:700; color:#7a4f00; }
+.hlb { background:var(--lblue); padding:1px 6px; border-radius:5px; font-weight:700; color:var(--blue); }
+
+/* intro block */
+.intro-blk {
+  background:var(--navy); color:#fff;
+  border-radius:18px; padding:30px 32px;
+  margin-bottom:44px; position:relative; overflow:hidden;
+}
+.intro-blk::after { content:'∑'; position:absolute; bottom:-20px; left:20px; font-size:160px; opacity:.04; color:#fff; pointer-events:none; }
+.intro-blk h2 { font-size:22px; font-weight:900; color:var(--gold); margin-bottom:12px; }
+.intro-blk p  { font-size:16px; line-height:2.1; opacity:.9; }
+
+/* answer box */
+.ans {
+  background:var(--lgreen); border-right:4px solid var(--green);
+  border-radius:10px; padding:14px 18px; margin:14px 0;
+  font-size:15px; color:#0f4a2a;
+}
+
+</style>
+</head>
+<body>
+
+<!-- =================== HEADER =================== -->
+<header class="hdr">
+  <div class="hdr-chip">Summary chapter1 Probability</div>
+  <h1>🎲 Probability</h1>
+  <p>هو مش ملخص هو يعتبر شرح في كل التفاصيل و القوانين وربنا يوفقنا في الكويز بقي </p>
+  <div class="hdr-by"> By: Eng / Moataz</div>
+</header>
+
+<!-- =================== TOC =================== -->
+<nav class="toc no-print">
+    <div class="toc-title">صلي علي النبي و قول بسم الله الرحمن الرحيم ويلا نبدأ</div>
+  <div class="toc-title">Chapter Contents</div>
+  <div class="toc-tags">
+    <span class="toc-tag">1.1	Historical Introduction</span>
+    <span class="toc-tag">1.2	Basic Definitions</span>
+    <span class="toc-tag">1.3	Classical Probability</span>
+    <span class="toc-tag">1.4	Axioms</span>
+    <span class="toc-tag">1.5	Rules of Probability</span>
+    <span class="toc-tag">1.6	Conditional Probability</span>
+    <span class="toc-tag">1.7	Bayes' Theorem and Total Probability</span>
+    <span class="toc-tag">1.8	Independent Events </span>
+  </div>
+</nav>
+
+<!-- =================== BODY =================== -->
+<main class="body">
+<div class="wrap">
+
+  <!-- INTRO -->
+  <div class="intro-blk">
+    <h2> إيه اللي هنعرفه في الشابتر ده؟</h2>
+    <p>
+      ال Probability هو طريقة رياضية بنقيس بيها <strong>إمكانية حدوث حاجة معينة</strong>.
+      بدل ما تقول "ممكن يحصل" أو "مش هيحصل"، بتقول رقم بين 0 و 1.
+      الرقم صفر معناه مستحيل، الرقم واحد معناه أكيد هيحصل.
+      كل حاجة تانية بينهم  قد إيه هي محتملة.
+    </p>
+    <p style="margin-top:10px;">
+ بمعني  هوا عايز يعرف احتمالية حدوث الحاجة دي 
+    </p>
+  </div>
+
+  <!-- =================== 1.1 =================== -->
+  <section class="sec">
+    <div class="sec-head">
+      <div class="sec-num">1.1</div>
+      <div>
+        <div class="sec-ttl"> Introduction — إزاي الموضوع ده بدأ؟</div>
+        <div class="sec-sub">مهم اوي لينا ك Data scientist </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-ttl"><span class="ic">🎰</span>طبعا الكلام ده كله ملوش لازمة بس عشان تبقي فاهم الدنيا</div>
+      <p>
+        الاحتمالات بدأت في <strong>نص القرن التامن عشر</strong> بسبب القمار! الناس اللي بتلعب "ملك أو كتابة"
+        وبتراهن على النرد كانوا عايزين يفهموا: ليه بيكسبوا؟ ليه بيخسروا؟
+        إيه اللي "عادل" في المراهنة؟
+      </p>
+      <p style="margin-top:10px;">
+        الناس بتوع الرياضة بدأوا يدرسوا الموضوع ده وطلعوا بحسابات، وبعدين اتفاجأوا إن نفس الحسابات بتنفع في:
+      </p>
+      <div class="g3" style="margin-top:14px;">
+        <div class="tip blue" style="margin:0;">
+          <div class="ti"></div>
+          <div class="tb"><div class="tl">في الطب</div>ولد ولا بنت؟ هيعيش ولا لأ؟</div>
+        </div>
+        <div class="tip green" style="margin:0;">
+          <div class="ti"></div>
+          <div class="tb"><div class="tl">في التأمين</div>احتمال الوفاة والحوادث</div>
+        </div>
+        <div class="tip gold" style="margin:0;">
+          <div class="ti"></div>
+          <div class="tb"><div class="tl">في الصناعة</div>احتمال العيوب والأعطال</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-ttl"><span class="ic"></span> اعرفهم و خلاص العلماء في الموضوع ده</div>
+      <div class="g2">
+        <div style="background:var(--lblue);border-radius:10px;padding:14px;border-right:3px solid var(--blue);">
+          <strong style="color:var(--blue);">Kolmogorov</strong> (روسي)<br>
+          <span style="font-size:14px;color:var(--ink2);">حط الأساس الرياضي للاحتمالات — البديهيات الـ3 اللي هنتعلمها</span>
+        </div>
+        <div style="background:var(--lblue);border-radius:10px;padding:14px;border-right:3px solid var(--blue);">
+          <strong style="color:var(--blue);">R. A. Fisher</strong> (إنجليزي)<br>
+          <span style="font-size:14px;color:var(--ink2);">أسس الإحصاء الحديث — طور طرق تحليل البيانات</span>
+        </div>
+        <div style="background:var(--lblue);border-radius:10px;padding:14px;border-right:3px solid var(--blue);">
+          <strong style="color:var(--blue);">Neyman & Pearson</strong><br>
+          <span style="font-size:14px;color:var(--ink2);">طوروا نظرية اختبارات الفروض الإحصائية</span>
+        </div>
+        <div style="background:var(--lblue);border-radius:10px;padding:14px;border-right:3px solid var(--blue);">
+          <strong style="color:var(--blue);">A. Wald</strong><br>
+          <span style="font-size:14px;color:var(--ink2);">طور نظرية القرار الإحصائي</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip gold">
+      <div class="ti">💡</div>
+      <div class="tb">
+        <div class="tl">من هنا بقي نبدأ الكلام المهم</div>
+        الاحتمال رقم بين 0 و1. <strong>صفر</strong> = مستحيل. <strong>واحد</strong> = أكيد. كل حاجة تانية بينهم.
+        <div class="fml" style="margin-top:12px; padding:14px;">
+          <div class="fml-eq">0 ≤ P(A) ≤ 1</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="div">
+
+  <!-- =================== 1.2 =================== -->
+  <section class="sec">
+    <div class="sec-head">
+      <div class="sec-num">١·2.1</div>
+      <div>
+        <div class="sec-ttl">📚Basic Definitions</div>
+        <div class="sec-sub">Basic Definitions — الكلام ده لازم تبقى فهمه قوي</div>
+      </div>
+    </div>
+
+    <!-- Experiment -->
+    <div class="term">
+      <div class="term-nm">Random Experiment<span class="term-en">🔬 التجربة العشوائية </span></div>
+      <p>أي حاجة بتعملها وإنت <strong>مش متأكد هيطلع إيه</strong> بالظبط — ده اللي بنسميه تجربة عشوائية.</p>
+      <p style="margin-top:8px;">مثال: رمية عملة، رمية نرد، سحب ورقة من كوتشينة، قياس وقت حياة لمبة.</p>
+      <div class="tip blue" style="margin-top:14px;">
+        <div class="ti">📋</div>
+        <div class="tb">
+          <div class="tl">3 شروط لازم تتحقق:</div>
+          <ul class="steps">
+            <li class="step"><div class="s-num">1</div><div><strong>كل النتائج معروفة يعني :</strong> لو رميت نرد، عارف إن النتائج الممكنة هي 1 و2 و3 و4 و5 و6.</div></li>
+            <li class="step"><div class="s-num">2</div><div><strong>ممكن تكررها:</strong> ممكن أرمي النرد مرات كتير في نفس الظروف.</div></li>
+            <li class="step"><div class="s-num">3</div><div><strong>النتيجة مجهولة انت مش عارف ايه اللي هيطلع:</strong> مش عارف هيطلع كام في الرمية الجاية.</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sample Space -->
+    <div class="term" style="border-top-color:var(--green);">
+      <div class="term-nm" style="color:var(--green);">Sample Space S<span class="term-en" style="background:var(--lgreen);color:var(--green);">🌐 فضاء العينة </span></div>
+      <p>فضاء العينة <strong>S</strong> = <em>مجموعة كل النتائج الممكنة</em> — مش بعضها، كلها كلها.</p>
+      <p style="margin-top:8px;">لازم تعرف إن في أي رمية، نتيجة <strong>واحدة بس</strong> هتحصل من نتائج S.</p>
+      <div class="g2" style="margin-top:14px;">
+        <div class="tip green" style="margin:0;">
+          <div class="ti">🎲</div>
+          <div class="tb"><div class="tl">نرد عادي:</div>S = {1, 2, 3, 4, 5, 6}</div>
+        </div>
+        <div class="tip green" style="margin:0;">
+          <div class="ti">🪙</div>
+          <div class="tb"><div class="tl">عملة واحدة:</div>S = {H, T} = {ملك, كتابة}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Example 1.1 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num">Example 1.1</span> رمية عملتين معدنيتين</div>
+      <div class="ex-bd">
+        <div class="ex-q">لو رمينا عملتين في نفس الوقت، وكل عملة ممكن تطلع وجه (H) أو كتابة (T) — إيه فضاء العينة؟</div>
+        <div class="sol-tag">✅الحل</div>
+        <p>هنكتب كل النتائج الممكنة:</p>
+        <div class="ss">
+          <span class="ss-lbl">فضاء العينة كامل:</span>
+          S = { HH , HT , TH , TT }
+        </div>
+        <p style="margin-top:10px;">كل نتيجة عبارة عن: (نتيجة العملة الأولى، نتيجة العملة التانية)</p>
+        <div class="g2" style="margin-top:12px;">
+          <div class="ans"><strong>HH</strong> = الأولى وجه والتانية وجه</div>
+          <div class="ans"><strong>HT</strong> = الأولى وجه والتانية كتابة</div>
+          <div class="ans"><strong>TH</strong> = الأولى كتابة والتانية وجه</div>
+          <div class="ans"><strong>TT</strong> = الأولى كتابة والتانية كتابة</div>
+        </div>
+        <div class="tip gold" style="margin-top:14px;">
+          <div class="ti">💡</div>
+          <div class="tb"> 
+            <div class="tl"> مهم جداً — فضاء العينة بيتغير حسب اللي بتهتم بي  يعني الترتيب جوا ال S مش بيفرق:</div>
+           <strong>بعدد الوجوه</strong> مش بترتيبهم → S = {0, 1, 2}<br>
+            يعني نفس التجربة، فضاءات عينة مختلفة حسب السؤال!  يعني كام H و كام T
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Example 1.2 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num">مثال 1.2</span> رمي عملة لحد ما يطلع وجه</div>
+      <div class="ex-bd">
+        <div class="ex-q">نفضل نرمي عملة لحد ما يطلع وجه. إيه فضاء العينة؟</div>
+        <div class="sol-tag">✅ الحل</div>
+        <p>ممكن يطلع وجه في أول رمية، أو في التانية، أو في التالتة... إلخ. فمعنى ده:</p>
+        <div class="ss">S = { H, TH, TTH, TTTH, ... }</div>
+        <p style="margin-top:10px;">أو لو اهتمينا بعدد الرميات فقط:</p>
+        <div class="ss">S* = { 1, 2, 3, 4, ... }</div>
+        <p style="margin-top:10px;">ده مثال على فضاء عينة <strong>لانهائي معدود infinite</strong> — النتائج لا نهائية لكن ممكن تعدها (1 و 2 و 3 ...).</p>
+      </div>
+    </div>
+
+    <!-- Example 1.3 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num">مثال ١.٣</span> وقت حياة لمبة كهرباء</div>
+      <div class="ex-bd">
+        <div class="ex-q">حطينا لمبة تشتغل لحد ما تحترق. إيه فضاء العينة؟</div>
+        <div class="sol-tag">✅ الحل</div>
+        <p>اللمبة ممكن تتعطل في أي لحظة — يعني الوقت ممكن يكون أي رقم من 0 للانهاية:</p>
+        <div class="ss">S = { t : 0 ≤ t &lt; ∞ }</div>
+        <p style="margin-top:10px;">ده فضاء عينة <strong>مستمر (Continuous)</strong> — لأن t بتاخد أي قيمة حقيقية مش بس أرقام صحيحة.</p>
+        <div class="tip teal" style="margin-top:12px;">
+          <div class="ti">📏</div>
+          <div class="tb">
+            <div class="tl">لو قسنا الوقت بالساعة (أرقام صحيحة فقط):</div>
+            S* = {0, 1, 2, 3, ...} → بقى فضاء عينة منفصل (Discrete)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Types of Sample Space -->
+    <div class="card">
+      <div class="card-ttl"><span class="ic">🗂️</span> (متشغلش بالك بيهم دلوقتي لسة هناخدهم في شابتر 2)  أنواع فضاء العينة</div>
+      <div class="g2">
+        <div style="background:var(--lblue);border-radius:12px;padding:18px;border-right:4px solid var(--blue);">
+          <div style="font-weight:800;color:var(--blue);margin-bottom:8px;">📦 منفصل (Discrete)</div>
+          <p style="font-size:14px;">النتائج محدودة أو لانهائية معدودة.</p>
+          <p style="font-size:14px;color:var(--ink2);">مثال: نرد = {1,2,3,4,5,6} أو عدد الرميات = {1,2,3,...}</p>
+        </div>
+        <div style="background:var(--lteal);border-radius:12px;padding:18px;border-right:4px solid var(--teal);">
+          <div style="font-weight:800;color:var(--teal);margin-bottom:8px;">〰️ مستمر (Continuous)</div>
+          <p style="font-size:14px;">النتائج بتاخد أي قيمة في فترة حقيقية — مش ممكن تعدها.</p>
+          <p style="font-size:14px;color:var(--ink2);">مثال: وقت الحياة، الحرارة، الضغط، الطول.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Events -->
+    <div class="sec-head" style="margin-top:36px;">
+      <div class="sec-num" style="font-size:15px;">🎯</div>
+      <div>
+        <div class="sec-ttl" style="font-size:20px;">الأحداث Events — كل أنواعها</div>
+                        <p style="font-size:15px;"> اي خدمة مروق عليكم اشكال و شغل عالي اهو 😂❤<br>
+
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="term" style="border-top-color:#1b4fa8;">
+        <div class="term-nm">الحدث A <span class="term-en">Event</span></div>
+        <p style="font-size:15px;">الحدث = أي مجموعة جزئية من S.<br>
+        <strong>A ⊂ S</strong><br>
+        مثال: رمية نرد → A = "رقم زوجي" = {2,4,6}</p>
+        <div class="venn-row">
+          <div class="venn-item">
+            <svg width="120" height="80" viewBox="0 0 120 80">
+              <rect width="120" height="80" rx="8" fill="#eef4ff" stroke="#c4d4f4" stroke-width="1.5"/>
+              <ellipse cx="60" cy="42" rx="30" ry="22" fill="#1b4fa8" opacity="0.22" stroke="#1b4fa8" stroke-width="2"/>
+              <text x="60" y="47" text-anchor="middle" font-size="16" fill="#1b4fa8" font-weight="bold">A</text>
+              <text x="112" y="14" font-size="12" fill="#888" text-anchor="end">S</text>
+            </svg>
+            <div class="venn-lbl">A ⊂ S</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="term" style="border-top-color:#d4860a;">
+        <div class="term-nm">المستحيل والأكيد</div>
+        <p style="font-size:15px;">
+          <span class="pill pr">∅ الحدث المستحيل</span> → P(∅) = 0<br>
+          <span class="pill pg">S الحدث الأكيد</span> → P(S) = 1<br><br>
+          <em style="font-size:13px; color:var(--ink2);">مثال: "يطلع 7 من نرد" = مستحيل = ∅</em>
+        </p>
+      </div>
+    </div>
+
+    <div class="g2" style="margin-top:4px;">
+      <div class="term" style="border-top-color:var(--green);">
+        <div class="term-nm" style="color:var(--green);">الاتحاد A ∪ B <span class="term-en" style="background:var(--lgreen);color:var(--green);">Union</span></div>
+        <p style="font-size:15px;">A ∪ B = كل العناصر اللي في A <strong>أو</strong> B أو الاتنين.<br>
+        الحدث بيحصل لو <strong>A حصل أو B حصل</strong> (أو الاتنين مع بعض).</p>
+        <div class="venn-row">
+          <div class="venn-item">
+            <svg width="140" height="80" viewBox="0 0 140 80">
+              <rect width="140" height="80" rx="8" fill="#e6f7ee" stroke="#a0d8b8" stroke-width="1"/>
+              <ellipse cx="55" cy="40" rx="32" ry="24" fill="#1a7a4a" opacity="0.45" stroke="#1a7a4a" stroke-width="1.5"/>
+              <ellipse cx="85" cy="40" rx="32" ry="24" fill="#1a7a4a" opacity="0.45" stroke="#1a7a4a" stroke-width="1.5"/>
+              <text x="40" y="44" text-anchor="middle" font-size="14" fill="white" font-weight="bold">A</text>
+              <text x="100" y="44" text-anchor="middle" font-size="14" fill="white" font-weight="bold">B</text>
+              <text x="133" y="14" font-size="11" fill="#555" text-anchor="end">S</text>
+            </svg>
+            <div class="venn-lbl">A ∪ B</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="term" style="border-top-color:var(--red);">
+        <div class="term-nm" style="color:var(--red);">التقاطع A ∩ B <span class="term-en" style="background:var(--lred);color:var(--red);">Intersection</span></div>
+        <p style="font-size:15px;">A ∩ B = العناصر اللي في A <strong>و</strong> B مع بعض.<br>
+        بيحصل بس لو <strong>A حصل و B حصل</strong> في نفس الوقت.</p>
+        <div class="venn-row">
+          <div class="venn-item">
+            <svg width="140" height="80" viewBox="0 0 140 80">
+              <rect width="140" height="80" rx="8" fill="#fff0f0" stroke="#f4a0a0" stroke-width="1"/>
+              <ellipse cx="55" cy="40" rx="32" ry="24" fill="#b92a2a" opacity="0.18" stroke="#b92a2a" stroke-width="1.5"/>
+              <ellipse cx="85" cy="40" rx="32" ry="24" fill="#b92a2a" opacity="0.18" stroke="#b92a2a" stroke-width="1.5"/>
+              <clipPath id="cA"><ellipse cx="55" cy="40" rx="32" ry="24"/></clipPath>
+              <ellipse cx="85" cy="40" rx="32" ry="24" fill="#b92a2a" opacity="0.7" clip-path="url(#cA)"/>
+              <text x="38" y="44" text-anchor="middle" font-size="14" fill="#b92a2a" font-weight="bold">A</text>
+              <text x="102" y="44" text-anchor="middle" font-size="14" fill="#b92a2a" font-weight="bold">B</text>
+              <text x="133" y="14" font-size="11" fill="#888" text-anchor="end">S</text>
+            </svg>
+            <div class="venn-lbl">A ∩ B</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="g2" style="margin-top:4px;">
+      <div class="term" style="border-top-color:#c05621;">
+        <div class="term-nm" style="color:#c05621;">المتنافية <span class="term-en" style="background:#fff3e6;color:#c05621;">Mutually Exclusive</span></div>
+        <p style="font-size:15px;">A و B متنافيان لو <strong>مش ممكن يحصلوا مع بعض</strong>:<br>
+        <strong>A ∩ B = ∅</strong></p>
+        <div class="venn-row">
+          <div class="venn-item">
+            <svg width="140" height="80" viewBox="0 0 140 80">
+              <rect width="140" height="80" rx="8" fill="#fff6e0" stroke="#f4cc80" stroke-width="1"/>
+              <ellipse cx="38" cy="40" rx="28" ry="22" fill="#1b4fa8" opacity="0.5" stroke="#1b4fa8" stroke-width="1.5"/>
+              <ellipse cx="102" cy="40" rx="28" ry="22" fill="#b92a2a" opacity="0.5" stroke="#b92a2a" stroke-width="1.5"/>
+              <text x="38" y="44" text-anchor="middle" font-size="14" fill="white" font-weight="bold">A</text>
+              <text x="102" y="44" text-anchor="middle" font-size="14" fill="white" font-weight="bold">B</text>
+              <text x="133" y="14" font-size="11" fill="#888" text-anchor="end">S</text>
+            </svg>
+            <div class="venn-lbl">A ∩ B = ∅</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="term" style="border-top-color:#2b6cb0;">
+        <div class="term-nm" style="color:#2b6cb0;">المكمل Ā <span class="term-en">Complement</span></div>
+        <p style="font-size:15px;">Ā = كل اللي في S وليس في A.<br>
+        لو A حصل → Ā ماحصلش. والعكس.</p>
+        <div class="venn-row">
+          <div class="venn-item">
+            <svg width="140" height="80" viewBox="0 0 140 80">
+              <rect width="140" height="80" rx="8" fill="#1b4fa8" opacity="1" rx="8"/>
+              <rect width="140" height="80" rx="8" fill="#1b4fa8" opacity="0.25"/>
+              <rect width="140" height="80" rx="8" fill="none" stroke="#a0b8e8" stroke-width="1"/>
+              <ellipse cx="70" cy="40" rx="30" ry="22" fill="white"/>
+              <text x="70" y="45" text-anchor="middle" font-size="14" fill="#1b4fa8" font-weight="bold">A</text>
+              <text x="20" y="22" font-size="14" fill="white" font-weight="bold">Ā</text>
+              <text x="133" y="14" font-size="11" fill="white" text-anchor="end">S</text>
+            </svg>
+            <div class="venn-lbl">Ā = S - A</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="div">
+
+  <!-- =================== 1.3 =================== -->
+  <section class="sec">
+    <div class="sec-head">
+      <div class="sec-num">1.3</div>
+      <div>
+        <div class="sec-ttl">🎯Classical Probability</div>
+        <div class="sec-sub"> 🎯 الاحتمال الكلاسيكي— أبسط طريقة لحساب الاحتمال</div>
+      </div>
+    </div>
+
+    <div class="tip blue">
+      <div class="ti">💡</div>
+      <div class="tb">
+        <div class="tl">الفكرة ببساطة:</div>
+        لو التجربة عندها N نتيجة كلها <strong>متساوية الاحتمال</strong> ومتنافية،
+        والحدث A فيه n(A) نتيجة منها — فاحتمال A ببساطة:
+      </div>
+    </div>
+
+    <div class="fml">
+      <div class="fml-lbl">📐 القانون</div>
+      <div class="fml-eq">P(A) = n(A) / N</div>
+      <div class="fml-note">= (عدد النتائج المحققة للحدث A) ÷ (إجمالي عدد النتائج الممكنة في S)</div>
+    </div>
+
+    <!-- Ex 1.4 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num"> Ex 1.4 </span> عملة تتقلب 3 مرات</div>
+      <div class="ex-bd">
+        <div class="ex-q">
+          نرمي عملة عادلة 3 مرات. عرّفنا:<br>
+          <strong>A</strong> = الحدث إن وجهين أو أكتر بيطلعوا متتاليين<br>
+          <strong>B</strong> = الحدث إن كل الرميات الثلاثة نفس النتيجة (كلها وجه أو كلها كتابة)
+        </div>
+        <div class="sol-tag">✅ الحل خطوة بخطوة</div>
+        <p><strong>أولاً:</strong>  نكتب فضاء العينة كامل:ال  S</p>
+        <div class="ss">S = { HHH, HHT, HTH, THH, HTT, THT, TTH, TTT }</div>
+        <p style="margin-top:10px;"><strong>N = 8</strong> نتيجة، كلها متساوية الاحتمال (لأن العملة عادلة) → احتمال كل نتيجة = <span class="hlb">1/8</span></p>
+
+        <p style="margin-top:14px;"><strong>ثانياً:</strong> نحدد الحدث A (وجهين أو أكتر متتاليين):</p>
+        <div class="g2">
+          <div class="ans">HHH: وجه-وجه-وجه ✓ (الأول والتاني متتاليان)</div>
+          <div class="ans">HHT: وجه-وجه-كتابة ✓ (الأول والتاني متتاليان)</div>
+          <div class="ans">THH: كتابة-وجه-وجه ✓ (التاني والتالت متتاليان)</div>
+          <div style="background:var(--lred);border-right:3px solid var(--red);border-radius:8px;padding:10px 14px;font-size:14px;color:var(--red);">HTH, HTT, THT, TTH, TTT ✗ (مفيش وجهين متتاليين)</div>
+        </div>
+        <div class="ss" style="margin-top:10px;">A = { HHH, HHT, THH } → n(A) = 3</div>
+
+        <p style="margin-top:14px;"><strong>ثالثاً:</strong> نحدد الحدث B (كلها نفس النتيجة):</p>
+        <div class="ss">B = { HHH, TTT } → n(B) = 2</div>
+
+        <div class="fml" style="margin-top:14px;">
+          <div class="fml-eq">P(A) = 3/8 &nbsp;&nbsp;&nbsp; P(B) = 2/8 = 1/4</div>
+        </div>
+
+        <p style="margin-top:14px;"><strong>A ∩ B</strong> = العناصر المشتركة = {HHH} فقط</p>
+        <div class="fml">
+          <div class="fml-eq">P(A ∩ B) = 1/8</div>
+        </div>
+
+        <p style="margin-top:10px;"><strong>A ∪ B</strong> = {HHH, HHT, THH, TTT}</p>
+        <div class="fml">
+          <div class="fml-eq">P(A ∪ B) = 4/8 = 1/4</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ex 1.5 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num"> Ex 1.5 </span> كرات في كيس (1 لـ 15)</div>
+      <div class="ex-bd">
+        <div class="ex-q">
+          في كيس 15 كرة مرقمة من 1 لـ 15. بنسحب كرة واحدة عشوائياً. إيه احتمال إن الرقم:
+          <br>(i) عدد أولي أكبر من 5
+          <br>(ii) عدد فردي أقل من 9
+        </div>
+        <div class="sol-tag">✅ الحل</div>
+        <p>N = 15 (كل الكرات متساوية الاحتمال)</p>
+
+        <p style="margin-top:10px;"><strong>A₁</strong> = عدد أولي أكبر من 5:</p>
+        <div class="tip blue" style="padding:10px 14px; margin:8px 0;">
+          <div class="ti">🔢</div>
+          <div class="tb">الأعداد الأولية بين 1 و15 هي: 2، 3، 5، 7، 11، 13<br>
+          أكبر من 5 منهم: <strong>7 و 11 و 13</strong></div>
+        </div>
+        <div class="ss">A₁ = { 7, 11, 13 } → n(A₁) = 3</div>
+        <div class="fml"><div class="fml-eq">P(A₁) = 3/15 = 1/5</div></div>
+
+        <p style="margin-top:14px;"><strong>A₂</strong> = عدد فردي أقل من 9:</p>
+        <div class="ss">A₂ = { 1, 3, 5, 7 } → n(A₂) = 4</div>
+        <div class="fml"><div class="fml-eq">P(A₂) = 4/15</div></div>
+
+        <div class="tip gold" style="margin-top:14px;">
+          <div class="ti">🧮</div>
+          <div class="tb">
+            <div class="tl">جرب تحلها بنفسك:</div>
+            <strong>A₁ ∩ A₂</strong> = الأعداد الموجودة في A₁ <em>و</em> A₂ مع بعض = ؟<br>
+            <em style="font-size:14px;color:var(--ink2);">الجواب: {7} لأن 7 هو الوحيد اللي أولي>5 وفردي&lt;9 → P = 1/15</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ex 1.6 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num">مثال ١.٦</span> نرد اتقلب مرتين — المجموع 9</div>
+      <div class="ex-bd">
+        <div class="ex-q">نرد  اتقلب مرتين. إيه احتمال إن مجموع الوجهين = 9؟</div>
+        <div class="sol-tag">✅ الحل</div>
+        <p>فضاء العينة = كل الأزواج الممكنة (i, j) حيث i و j من 1 لـ6:</p>
+        <p>N = 6 × 6 = <strong>36</strong> نتيجة متساوية الاحتمال</p>
+        <p style="margin-top:10px;">الحدث A = {مجموع = 9}: نلاقي كل الأزواج اللي مجموعها 9:</p>
+        <div class="g2" style="margin-top:8px;">
+          <div class="ans">(3, 6) → 3+6 = 9 ✓</div>
+          <div class="ans">(4, 5) → 4+5 = 9 ✓</div>
+          <div class="ans">(5, 4) → 5+4 = 9 ✓</div>
+          <div class="ans">(6, 3) → 6+3 = 9 ✓</div>
+        </div>
+        <div class="ss" style="margin-top:10px;">A = { (3,6), (4,5), (5,4), (6,3) } → n(A) = 4</div>
+        <div class="fml"><div class="fml-eq">P(A) = 4/36 = 1/9</div></div>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="div">
+
+  <!-- =================== 1.4 =================== -->
+  <section class="sec">
+    <div class="sec-head">
+      <div class="sec-num">1.4</div>
+      <div>
+        <div class="sec-sub">🏛️ المدخل البديهي للاحتمال</div>
+        <div class="sec-ttl">Axiomatic Approach </div>
+      </div>
+    </div>
+
+    <div class="tip blue">
+      <div class="ti"></div>
+      <div class="tb">
+        <div class="tl">ليه محتاجينه اصلا!! ؟؟؟</div>
+        الاحتمال الكلاسيكي شغال كويس لكنه <strong>مش كافي</strong> لما النتائج مش متساوية (زي نرد معووج)
+        أو لما فضاء العينة مستمر (زي الوقت). عشان كده Kolmogorov بنى الاحتمال على 3 حاجات رياضية.
+      </div>
+    </div>
+
+    <div class="thm">
+      <div class="thm-hd">⚡ الحاجات الثلاث — Kolmogorov's Axioms</div>
+      <div class="thm-bd">
+        <ul class="ax-list">
+          <li class="ax-item">
+            <div class="ax-n">I</div>
+            <div>
+              <strong>الاحتمال دايماً موجب أو صفر — مفيش احتمال سالب! (زي ال r في الديسكريت)</strong>
+              <div class="ax-f">P(A) ≥ 0 لأي حدث A</div>
+            </div>
+          </li>
+          <li class="ax-item">
+            <div class="ax-n">II</div>
+            <div>
+              <strong>احتمال فضاء العينة الكامل = 1  الحدث الأكيد</strong>
+              <div class="ax-f">P(S) = 1</div>
+            </div>
+          </li>
+          <li class="ax-item">
+            <div class="ax-n">III</div>
+            <div>
+              <strong>لو الأحداث متنافية، احتمال اتحادها = مجموع احتمالاتهم</strong>
+              <div class="ax-f">P(A₁ ∪ A₂ ∪ ...) = P(A₁) + P(A₂) + ...</div>
+              يعني لو A ∩ B = ∅ → P(A ∪ B) = P(A) + P(B)
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Ex 1.7 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num"> Ex 1.7</span> ثلاثة خيول في سباق</div>
+      <div class="ex-bd">
+        <div class="ex-q">
+          3 خيول A و B و C في سباق.<br>
+          A أكثر احتمالاً للفوز بضعف B.<br>
+          B أكثر احتمالاً للفوز بضعف C.<br>
+          إيه احتمال فوز كل منهم؟
+        </div>
+        <div class="sol-tag">✅ الحل</div>
+        <p>نفرض P(C) = p (الخيل الأصغر احتمالاً)</p>
+        <div class="g2" style="margin:10px 0;">
+          <div class="ans">P(B) = 2p &nbsp;&nbsp; (B ضعف C)</div>
+          <div class="ans">P(A) = 2×2p = 4p &nbsp;&nbsp; (A ضعف B)</div>
+        </div>
+        <p>من البديهية II (مجموع الاحتمالات = 1 لأن واحد بس هيفوز):</p>
+        <div class="fml">
+          <div class="fml-eq">4p + 2p + p = 7p = 1 → p = 1/7</div>
+        </div>
+        <div class="g2" style="margin-top:12px;">
+          <div class="ans" style="text-align:center;"><strong>P(A) = 4/7 ≈ 57%</strong></div>
+          <div class="ans" style="text-align:center;"><strong>P(B) = 2/7 ≈ 29%</strong></div>
+          <div class="ans" style="text-align:center;"><strong>P(C) = 1/7 ≈ 14%</strong></div>
+          <div class="tip green" style="margin:0;padding:10px 14px;">
+            <div class="ti">✅</div>
+            <div class="tb">التحقق: 4/7 + 2/7 + 1/7 = 7/7 = 1 ✓</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ex 1.8 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num">مثال ١.٨</span> نرد معووج (Loaded Die)</div>
+      <div class="ex-bd">
+        <div class="ex-q">
+          نرد معووج: كل رقم فردي (1, 3, 5) احتماله ضعف احتمال كل رقم زوجي (2, 4, 6).<br>
+          أوجد P(G) حيث G = رقم أكبر من 3 في رمية واحدة.
+        </div>
+        <div class="sol-tag">✅ الحل</div>
+        <p>نفرض احتمال كل رقم زوجي = p → احتمال كل رقم فردي = 2p</p>
+        <div class="tip blue" style="margin:10px 0;">
+          <div class="ti">🔢</div>
+          <div class="tb">
+            مجموع كل الاحتمالات:<br>
+            P(1)+P(2)+P(3)+P(4)+P(5)+P(6) = 2p+p+2p+p+2p+p = <strong>9p = 1</strong><br>
+            → p = 1/9
+          </div>
+        </div>
+        <table class="tbl">
+          <tr><th>الرقم</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+          <tr><td><strong>الاحتمال</strong></td><td>2/9</td><td>1/9</td><td>2/9</td><td class="hlb">1/9</td><td class="hlb">2/9</td><td class="hlb">1/9</td></tr>
+        </table>
+        <p style="margin-top:10px;">G = {4, 5, 6} → P(G) = P(4) + P(5) + P(6) = 1/9 + 2/9 + 1/9</p>
+        <div class="fml"><div class="fml-eq">P(G) = 4/9</div></div>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="div">
+
+  <!-- =================== 1.5 =================== -->
+  <section class="sec">
+    <div class="sec-head">
+      <div class="sec-num">1.5</div>
+      <div>
+        <div class="sec-ttl">📏خلاصة قواعد الاحتمال </div>
+        <div class="sec-sub">Rules of Probability — نظريات مبنية على البديهيات</div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="thm">
+        <div class="thm-hd">نظرية 1.1 — المجموعة الفارغة</div>
+        <div class="thm-bd">
+          <div class="fml" style="padding:12px; margin:0 0 12px;"><div class="fml-eq">P(∅) = 0</div></div>
+          <p style="font-size:14px;">الحدث المستحيل احتماله صفر دايماً.<br>
+          الإثبات: S ∪ ∅ = S و S ∩ ∅ = ∅ (متنافيان)<br>
+          → P(S) = P(S) + P(∅) → P(∅) = 0</p>
+        </div>
+      </div>
+
+      <div class="thm">
+        <div class="thm-hd teal">نظرية 1.2 — المكمل ⭐</div>
+        <div class="thm-bd">
+          <div class="fml" style="padding:12px; margin:0 0 12px;"><div class="fml-eq">P(Ā) = 1 - P(A)</div></div>
+          <p style="font-size:14px;">لأن A ∪ Ā = S (الأكيد) و A ∩ Ā = ∅ (متنافيان)<br>
+          → P(A) + P(Ā) = 1</p>
+          <div class="tip teal" style="padding:8px 12px; margin-top:8px;">
+            <div class="ti">🌟</div>
+            <div class="tb"><div class="tl">حيلة ذهبية:</div>لو المطلوب صعب، احسب مكمله وطرح من 1!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="g2" style="margin-top:16px;">
+      <div class="thm">
+        <div class="thm-hd" style="background:linear-gradient(90deg,#1a6b3a,#2ecc71);">نظرية 1.3 — المجموعة الجزئية</div>
+        <div class="thm-bd">
+          <div class="fml" style="padding:12px; margin:0 0 12px;"><div class="fml-eq">A ⊂ B → P(A) ≤ P(B)</div></div>
+          <p style="font-size:14px;">لو A موجودة جوه B كاملاً، فاحتمال A مش ممكن يتعدى احتمال B.<br>
+          <em>المنطق: A جزء من B، فلازم أصغر منها أو تساويها.</em></p>
+        </div>
+      </div>
+
+      <div class="thm">
+        <div class="thm-hd" style="background:linear-gradient(90deg,#7a2020,#c0392b);">نظرية1.4 — الحدود</div>
+        <div class="thm-bd">
+          <div class="fml" style="padding:12px; margin:0 0 12px;"><div class="fml-eq">0 ≤ P(A) ≤ 1</div></div>
+          <p style="font-size:14px;">لأي حدث A في S، احتماله دايماً بين 0 و1 (شامل الاتنين).<br>
+          يتبع من: ∅ ⊂ A ⊂ S → P(∅) ≤ P(A) ≤ P(S) → 0 ≤ P(A) ≤ 1</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Th 1.5 -->
+    <div class="thm" style="margin-top:16px;">
+      <div class="thm-hd">نظرية 1.5 — احتمال حدوث A وعدم حدوث B</div>
+      <div class="thm-bd">
+        <div class="fml"><div class="fml-eq">P(A ∩ B̄) = P(A) - P(A ∩ B)</div></div>
+        <p style="margin-top:12px;">ده بيقولك: احتمال إن A يحصل <strong>لكن B مش يحصل</strong> = احتمال A ناقص احتمال إن الاتنين يحصلوا مع بعض.</p>
+        <div class="tip gold" style="margin-top:12px;">
+          <div class="ti">📝</div>
+          <div class="tb">
+            <div class="tl">الإثبات ببساطة:</div>
+            A = (A ∩ B̄) ∪ (A ∩ B) → اتحاد حدثين متنافيين<br>
+            → P(A) = P(A ∩ B̄) + P(A ∩ B)<br>
+            → <strong>P(A ∩ B̄) = P(A) - P(A ∩ B)</strong> ✓
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Th 1.6 - MOST IMPORTANT -->
+    <div class="thm" style="margin-top:16px;">
+      <div class="thm-hd purple">⭐ نظرية 1.6 — قاعدة الجمع (Addition Rule) — الأهم في الفصل!</div>
+      <div class="thm-bd">
+        <div class="fml">
+          <div class="fml-lbl">🌟 لأي حدثين A و B</div>
+          <div class="fml-eq">P(A ∪ B) = P(A) + P(B) - P(A ∩ B)</div>
+          <div class="fml-note">لو A و B متنافيان → P(A ∩ B) = 0 → P(A ∪ B) = P(A) + P(B)</div>
+        </div>
+
+        <div class="tip red" style="margin-top:14px;">
+          <div class="ti">❓</div>
+          <div class="tb">
+            <div class="tl">ليه بنطرح P(A ∩ B)؟</div>
+            لأننا لما بنجمع P(A) + P(B)، بنحسب الجزء المشترك (A ∩ B) <strong>مرتين</strong>:
+            مرة في P(A) ومرة في P(B). فلازم نطرحه مرة عشان نصحح الحساب.
+          </div>
+        </div>
+
+        <div class="tip blue" style="margin-top:10px;">
+          <div class="ti">📐</div>
+          <div class="tb">
+            <div class="tl">التعميم لـ 3 أحداث:</div>
+            <div style="direction:ltr; font-size:15px; font-weight:700; line-height:2;">
+              P(A∪B∪C) = P(A)+P(B)+P(C) - P(A∩B) - P(A∩C) - P(B∩C) + P(A∩B∩C)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ex 1.9 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num"> Ex 1.9</span> النجاح في مادتين</div>
+      <div class="ex-bd">
+        <div class="ex-q">
+          احتمال نجاح طالبة في الرياضيات = 0.75<br>
+          احتمال نجاحها في الإنجليزي = 0.85<br>
+          احتمال النجاح في واحدة على الأقل = 0.9<br>
+          المطلوب: احتمال نجاحها في <strong>الاتنين</strong> مع بعض؟
+        </div>
+        <div class="sol-tag">✅ الحل</div>
+        <p>نطبق قاعدة الجمع بتاعة نظرية 1.6:</p>
+        <div class="fml">
+          <div class="fml-eq">P(M ∪ E) = P(M) + P(E) - P(M ∩ E)</div>
+        </div>
+        <p style="margin-top:12px;">نعوض بالأرقام:</p>
+        <div class="fml">
+          <div class="fml-eq">0.9 = 0.75 + 0.85 - P(M ∩ E)</div>
+        </div>
+        <p style="margin-top:10px;">→ P(M ∩ E) = 0.75 + 0.85 - 0.9 = <strong>0.7</strong></p>
+
+        <div class="g2" style="margin-top:16px;">
+          <div class="tip green" style="margin:0;">
+            <div class="ti">🧮</div>
+            <div class="tb">
+              <div class="tl">احتمال الرسوب في الاتنين:</div>
+              P(M̄ ∩ Ē) = 1 - P(M ∪ E) = 1 - 0.9 = <strong>0.1</strong>
+            </div>
+          </div>
+          <div class="tip blue" style="margin:0;">
+            <div class="ti">🧮</div>
+            <div class="tb">
+              <div class="tl">احتمال النجاح في واحدة بس:</div>
+              = P(M ∪ E) - P(M ∩ E) = 0.9 - 0.7 = <strong>0.2</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="div page-break">
+
+  <!-- =================== 1.6 =================== -->
+  <section class="sec">
+    <div class="sec-head">
+      <div class="sec-num">1.6</div>
+      <div>
+        <div class="sec-sub">🔍 الاحتمال الشرطي</div>
+        <div class="sec-ttl">Conditional Probability —  عندك معلومة زيادة</div>
+      </div>
+    </div>
+
+    <div class="tip teal">
+      <div class="ti">💭</div>
+      <div class="tb">
+        <div class="tl">تخيل الموقف ده:</div>
+        رمينا نرد  P(طلع 4) = 1/6 عادي.<br>
+        بس حد قالك "الرقم الطالع أكبر من 3" — دلوقتي فضاء العينة بتاعك تغير! بقى بس {4, 5, 6}.<br>
+        → P(طلع 4 | الرقم > 3) = <strong>1/3</strong> مش 1/6.<br>
+        المعلومة الزيادة <strong>غيّرت الاحتمال!</strong>
+      </div>
+    </div>
+
+    <div class="def">
+      <div class="def-body">
+        <strong>تعريف ال Conditional Probability:</strong><br>
+        لو P(B) > 0، فاحتمال A بشرط إن B حصل بالفعل هو:
+        <div class="def-formula">P(A|B) = P(A ∩ B) / P(B)</div>
+        يُقرأ: "احتمال A بشرط B"
+      </div>
+    </div>
+
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num"> Ex 1.10</span> شرائح إلكترونية من مصنعين</div>
+      <div class="ex-bd">
+        <div class="ex-q">صندوق فيه 100 شريحة إلكترونية من مصنعين:</div>
+        <table class="tbl">
+          <tr><th></th><th>B (مصنع 1)</th><th>B̄ (مصنع 2)</th><th>المجموع</th></tr>
+          <tr><td><strong>A (بايظة)</strong></td><td>15</td><td>5</td><td><strong>20</strong></td></tr>
+          <tr><td><strong>Ā (سليمة)</strong></td><td>45</td><td>35</td><td><strong>80</strong></td></tr>
+          <tr class="trow"><td><strong>المجموع</strong></td><td>60</td><td>40</td><td>100</td></tr>
+        </table>
+        <div class="sol-tag" style="margin-top:14px;">✅ الحل</div>
+        <p><strong>P(A)</strong> = 20/100 = 0.20 → 20% من الكل معيب</p>
+        <p style="margin-top:10px;"><strong>لو عرفنا إن الشريحة من مصنع 1 (B حصل):</strong></p>
+        <div class="tip blue" style="margin:10px 0;">
+          <div class="ti">🔍</div>
+          <div class="tb">
+            دلوقتي بنبص بس على عمود مصنع 1 = 60 شريحة.<br>
+            البايظة منهم = 15.<br>
+            <strong>P(A|B) = 15/60 = 0.25 = 25%</strong>
+          </div>
+        </div>
+        <p>بالقانون:</p>
+        <div class="fml">
+          <div class="fml-eq">P(A|B) = P(A ∩ B) / P(B) = (15/100) / (60/100) = 15/60 = 0.25</div>
+        </div>
+        <div class="tip gold" style="margin-top:12px;">
+          <div class="ti">😮</div>
+          <div class="tb">
+            <div class="tl">لاحظ!</div>
+            P(A) = 20% لكن P(A|B) = 25% → مصنع 1 عيوبه أعلى من المتوسط!<br>
+            المعلومة الإضافية (جت من مصنع 1) <strong>غيّرت</strong> احتمال إنها بايظة.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ex 1.11 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num"> Ex 1.11 </span> طالب بيذاكر مادتين</div>
+      <div class="ex-bd">
+        <div class="ex-q">
+          احتمال نجاح طالب في الاقتصاد = 0.8<br>
+          احتمال نجاحه في الاقتصاد والدين مع بعض = 0.5<br>
+          لو عرفنا إنه نجح في الاقتصاد — إيه احتمال نجاحه في الدين؟
+        </div>
+        <div class="sol-tag">✅ الحل</div>
+        <div class="fml">
+          <div class="fml-eq">P(R|E) = P(E ∩ R) / P(E) = 0.5 / 0.8 = 5/8 = 0.625</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Multiplication Rule -->
+    <div class="thm">
+      <div class="thm-hd purple">✖️ نظرية 1.8 — قاعدة الضرب (Multiplication Rule)</div>
+      <div class="thm-bd">
+        <p>لو ضربنا الطرفين في تعريف الاحتمال الشرطي في P(B):</p>
+        <div class="fml">
+          <div class="fml-lbl">قاعدة الضرب لحدثين</div>
+          <div class="fml-eq">P(A ∩ B) = P(A) · P(B|A) = P(B) · P(A|B)</div>
+        </div>
+        <div class="tip blue" style="margin-top:12px;">
+          <div class="ti">📐</div>
+          <div class="tb">
+            <div class="tl">للـ 3 أحداث (الـ Corollary):</div>
+            <div style="direction:ltr; font-size:16px; font-weight:700;">
+              P(A ∩ B ∩ C) = P(A) · P(B|A) · P(C|A∩B)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ex 1.12 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num">  Ex 1.12</span>  والله ما اعرف يعني ايه انابيب تلفزيون بس قشطا مش مهم خلينا في السؤال ( أنابيب تلفزيون (بدون إرجاع)</div>
+      <div class="ex-bd">
+        <div class="ex-q">شحنة فيها 240 أنبوب تلفزيون، 15 منهم معيبين. بنسحب 2 بدون إرجاع. إيه احتمال إن الاتنين معيبين؟</div>
+        <div class="sol-tag">✅ الحل</div>
+        <p><strong>الأول معيب:</strong> P(A) = 15/240 (من 240 أنبوب، 15 معيب)</p>
+        <p style="margin-top:8px;"><strong>التاني معيب بشرط الأول كان معيب:</strong> P(B|A) = 14/239 (بقى 239 أنبوب و 14 معيب)</p>
+        <div class="fml">
+          <div class="fml-eq">P(A ∩ B) = (15/240) × (14/239) = 210/57360 = 7/1912</div>
+        </div>
+        <div class="tip red" style="margin-top:12px;">
+          <div class="ti">⚠️</div>
+          <div class="tb">
+            <div class="tl">السحب بدون إرجاع = الأحداث مترابطة الحتة دي حلوة اووي!</div>
+            لما سحبنا الأول، الصندوق تغير — فاحتمال التاني بيتأثر بالأول.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ex 1.13 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num">Ex 1.13</span> صندوق فيوزات — سحب 3 بدون إرجاع</div>
+      <div class="ex-bd">
+        <div class="ex-q">صندوق فيه 20 فيوز، 5 منهم معيبين. بنسحب 3 بدون إرجاع. إيه احتمال إن الثلاثة معيبين؟</div>
+        <div class="sol-tag">✅ الحل</div>
+        <div class="g2">
+          <div class="ans">P(D₁) = 5/20 <br><em style="font-size:13px;">أول سحبة: 20 فيوز، 5 معيبين</em></div>
+          <div class="ans">P(D₂|D₁) = 4/19 <br><em style="font-size:13px;">تاني سحبة: بقى 19 فيوز، 4 معيبين</em></div>
+          <div class="ans">P(D₃|D₁∩D₂) = 3/18 <br><em style="font-size:13px;">تالت سحبة: بقى 18 فيوز، 3 معيبين</em></div>
+        </div>
+        <div class="fml" style="margin-top:10px;">
+          <div class="fml-eq">P(D₁∩D₂∩D₃) = (5/20) × (4/19) × (3/18) = 60/6840 = 1/114</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="div">
+
+  <!-- =================== 1.7 =================== -->
+  <section class="sec">
+    <div class="sec-head">
+      <div class="sec-num">1.7</div>
+      <div>
+        <div class="sec-sub">🌳 الاحتمال الكلي ونظرية بايز</div>
+        <div class="sec-ttl">Total Probability & Bayes — إزاي تحسب لمايكون في Sample Space S كتير مش واحدة</div>
+      </div>
+    </div>
+
+    <!-- Total Prob -->
+    <div class="thm">
+      <div class="thm-hd teal">📊 نظرية 1.8 — الاحتمال الكلي</div>
+      <div class="thm-bd">
+        <div class="tip teal" style="margin-bottom:14px;">
+          <div class="ti">💡</div>
+          <div class="tb">
+            <div class="tl">الفكرة:</div>
+            لو الحدث A ممكن يحصل عن طريق أكثر من "سبب" (B₁ أو B₂ أو ... أو Bk)،
+            بنحسب احتمال كل مسار ونجمعهم.
+          </div>
+        </div>
+        <p>لو B₁, B₂, ..., Bk بيقسموا S (متنافيين واتحادهم = S):</p>
+        <div class="fml">
+          <div class="fml-lbl">قانون الاحتمال الكلي</div>
+          <div class="fml-eq">P(A) = Σ P(Bᵢ) · P(A|Bᵢ)</div>
+          <div class="fml-note">= P(B₁)·P(A|B₁) + P(B₂)·P(A|B₂) + ... + P(Bk)·P(A|Bk)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ex 1.14 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num"> Ex 1.14</span> شركة تأجير سيارات</div>
+      <div class="ex-bd">
+        <div class="ex-q">
+          شركة بتأجر سيارات من 3 شركات:<br>
+          الشركة 1: 60% من السيارات — 9% منها محتاجة صيانة<br>
+          الشركة 2: 30% من السيارات — 20% منها محتاجة صيانة<br>
+          الشركة 3: 10% من السيارات — 6% منها محتاجة صيانة<br>
+          إيه احتمال إن أي سيارة وصلت للشركة هتحتاج صيانة؟
+        </div>
+        <div class="sol-tag">✅ الحل tree الاحتمالات</div>
+
+        <!-- SVG Tree -->
+        <div style="background:#f0f4fc;border-radius:14px;padding:16px;margin:14px 0;overflow-x:auto;">
+          <svg viewBox="0 0 520 240" width="100%" style="max-width:520px;display:block;margin:0 auto;">
+            <text x="260" y="18" text-anchor="middle" font-size="13" fill="#555" font-family="Cairo,sans-serif"> </text>
+            <circle cx="55" cy="120" r="7" fill="#0e1e40"/>
+            <!-- B1 -->
+            <line x1="62" y1="120" x2="185" y2="38" stroke="#1b4fa8" stroke-width="2"/>
+            <text x="116" y="68" text-anchor="middle" font-size="12" fill="#1b4fa8" font-weight="bold" font-family="Cairo,sans-serif">0.60</text>
+            <rect x="185" y="24" width="54" height="28" rx="8" fill="#1b4fa8"/>
+            <text x="212" y="43" text-anchor="middle" font-size="13" fill="white" font-weight="bold" font-family="Cairo,sans-serif">B₁</text>
+            <line x1="239" y1="38" x2="350" y2="18" stroke="#444" stroke-width="1.5" stroke-dasharray="5"/>
+            <text x="294" y="16" text-anchor="middle" font-size="11" fill="#444" font-family="Cairo,sans-serif">0.09</text>
+            <rect x="350" y="5" width="54" height="26" rx="7" fill="#d4860a"/>
+            <text x="377" y="23" text-anchor="middle" font-size="12" fill="#0e1e40" font-weight="bold" font-family="Cairo,sans-serif">A</text>
+            <text x="414" y="23" font-size="11" fill="#d4860a" font-family="Cairo,sans-serif">0.054</text>
+            <line x1="239" y1="38" x2="350" y2="55" stroke="#aaa" stroke-width="1.5" stroke-dasharray="5"/>
+            <text x="294" y="53" text-anchor="middle" font-size="11" fill="#aaa" font-family="Cairo,sans-serif">0.91</text>
+            <!-- B2 -->
+            <line x1="62" y1="120" x2="185" y2="120" stroke="#1b4fa8" stroke-width="2"/>
+            <text x="120" y="112" text-anchor="middle" font-size="12" fill="#1b4fa8" font-weight="bold" font-family="Cairo,sans-serif">0.30</text>
+            <rect x="185" y="106" width="54" height="28" rx="8" fill="#1b4fa8"/>
+            <text x="212" y="125" text-anchor="middle" font-size="13" fill="white" font-weight="bold" font-family="Cairo,sans-serif">B₂</text>
+            <line x1="239" y1="120" x2="350" y2="102" stroke="#444" stroke-width="1.5" stroke-dasharray="5"/>
+            <text x="294" y="100" text-anchor="middle" font-size="11" fill="#444" font-family="Cairo,sans-serif">0.20</text>
+            <rect x="350" y="89" width="54" height="26" rx="7" fill="#d4860a"/>
+            <text x="377" y="107" text-anchor="middle" font-size="12" fill="#0e1e40" font-weight="bold" font-family="Cairo,sans-serif">A</text>
+            <text x="414" y="107" font-size="11" fill="#d4860a" font-family="Cairo,sans-serif">0.060</text>
+            <line x1="239" y1="120" x2="350" y2="138" stroke="#aaa" stroke-width="1.5" stroke-dasharray="5"/>
+            <text x="294" y="136" text-anchor="middle" font-size="11" fill="#aaa" font-family="Cairo,sans-serif">0.80</text>
+            <!-- B3 -->
+            <line x1="62" y1="120" x2="185" y2="200" stroke="#1b4fa8" stroke-width="2"/>
+            <text x="116" y="174" text-anchor="middle" font-size="12" fill="#1b4fa8" font-weight="bold" font-family="Cairo,sans-serif">0.10</text>
+            <rect x="185" y="186" width="54" height="28" rx="8" fill="#1b4fa8"/>
+            <text x="212" y="205" text-anchor="middle" font-size="13" fill="white" font-weight="bold" font-family="Cairo,sans-serif">B₃</text>
+            <line x1="239" y1="200" x2="350" y2="183" stroke="#444" stroke-width="1.5" stroke-dasharray="5"/>
+            <text x="294" y="181" text-anchor="middle" font-size="11" fill="#444" font-family="Cairo,sans-serif">0.06</text>
+            <rect x="350" y="170" width="54" height="26" rx="7" fill="#d4860a"/>
+            <text x="377" y="188" text-anchor="middle" font-size="12" fill="#0e1e40" font-weight="bold" font-family="Cairo,sans-serif">A</text>
+            <text x="414" y="188" font-size="11" fill="#d4860a" font-family="Cairo,sans-serif">0.006</text>
+            <line x1="239" y1="200" x2="350" y2="218" stroke="#aaa" stroke-width="1.5" stroke-dasharray="5"/>
+            <text x="294" y="218" text-anchor="middle" font-size="11" fill="#aaa" font-family="Cairo,sans-serif">0.94</text>
+            <!-- labels -->
+            <text x="8" y="124" font-size="11" fill="#888" font-family="Cairo,sans-serif">بداية</text>
+          </svg>
+        </div>
+
+        <div class="fml">
+          <div class="fml-lbl">تطبيق الاحتمال الكلي</div>
+          <div class="fml-eq" style="font-size:17px;">
+            P(A) = (0.60)(0.09) + (0.30)(0.20) + (0.10)(0.06)
+            <br>= 0.054 + 0.060 + 0.006 = 0.12
+          </div>
+        </div>
+        <p style="margin-top:12px;">يعني <strong class="hl">12% من كل السيارات</strong> هتحتاج صيانة.</p>
+      </div>
+    </div>
+
+    <!-- Bayes -->
+    <div class="thm">
+      <div class="thm-hd purple">🔮  1.9 — نظرية بايز (Bayes' Theorem)</div>
+      <div class="thm-bd">
+        <div class="tip gold" style="margin-bottom:14px;">
+          <div class="ti"></div>
+          <div class="tb">
+            <div class="tl">الفرق بين الاحتمال الكلي وبايز:</div>
+            <strong>الاحتمال الكلي:</strong> من الأسباب للنتيجة  "إيه احتمال A؟"<br>
+            <strong>بايز:</strong> من النتيجة للأسباب  "بما إن A حصل، جه من أنهي مسار؟"<br>
+            ده اللي بنسميه <em>الاحتمال العكسي</em>.
+          </div>
+        </div>
+        <div class="fml">
+          <div class="fml-lbl">نظرية بايز</div>
+          <div class="fml-eq" style="font-size:17px;">P(Bᵣ|A) = P(Bᵣ) · P(A|Bᵣ) / Σ P(Bᵢ) · P(A|Bᵢ)</div>
+          <div class="fml-note">r = 1, 2, ..., k &nbsp;&nbsp; المقسوم عليه هو P(A) من الاحتمال الكلي</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ex 1.15 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num"> Ex 1.15</span> السيارة المتعطلة — جت من مين؟</div>
+      <div class="ex-bd">
+        <div class="ex-q">من المثال السابق — سيارة محتاجة صيانة وصلت للشركة. إيه احتمال إنها جت من الشركة 2؟</div>
+        <div class="sol-tag">✅ تطبيق بايز</div>
+        <div class="fml">
+          <div class="fml-eq" style="font-size:16px;">
+            P(B₂|A) = (0.30 × 0.20) / [(0.60×0.09) + (0.30×0.20) + (0.10×0.06)]
+            <br>= 0.060 / 0.120 = 0.5 = 50%
+          </div>
+        </div>
+        <div class="tip gold" style="margin-top:12px;">
+          <div class="ti"></div>
+          <div class="tb">
+            <div class="tl">لاحظ بقي</div>
+            الشركة 2 بتوفر 30% بس من السيارات... لكن 50% من المتعطلين منها!<br>
+            ده لأن نسبة العيوب عندها (20%) أعلى بكتير من الشركة 1 (9%) والشركة 3 (6%).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ex 1.16 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num">Ex 1.16</span> 3 صناديق شرائح إلكترونية</div>
+      <div class="ex-bd">
+        <div class="ex-q">
+          B₁: 20 شريحة — 5 بايظة &nbsp;&nbsp; B₂: 35 شريحة — 7 بايظة &nbsp;&nbsp; B₃: 40 شريحة — 5 بايظة<br>
+          اختير صندوق عشوائياً (متساوي الاحتمال) ثم شريحة. الشريحة طلعت بايظة.<br>
+          إيه احتمال إنها من الصندوق 2؟
+        </div>
+        <div class="sol-tag">✅ الحل</div>
+        <p>P(B₁) = P(B₂) = P(B₃) = 1/3 (الصناديق متساوية الاحتمال)</p>
+
+        <table class="tbl" style="margin:12px 0;">
+          <tr><th>الصندوق</th><th>P(Bᵢ)</th><th>P(A|Bᵢ)</th><th>P(Bᵢ) × P(A|Bᵢ)</th></tr>
+          <tr><td>B₁</td><td>1/3</td><td>5/20 = 1/4</td><td>1/12</td></tr>
+          <tr><td style="background:#fff8e0;font-weight:700;">B₂</td><td style="background:#fff8e0;">1/3</td><td style="background:#fff8e0;">7/35 = 1/5</td><td style="background:#fff8e0;font-weight:700;">1/15</td></tr>
+          <tr><td>B₃</td><td>1/3</td><td>5/40 = 1/8</td><td>1/24</td></tr>
+          <tr class="trow"><td colspan="3"><strong>P(A) الاحتمال الكلي</strong></td><td>23/120</td></tr>
+        </table>
+
+        <div class="fml">
+          <div class="fml-eq" style="font-size:16px;">
+            P(B₂|A) = (1/3 × 1/5) / (23/120) = (1/15) / (23/120) = 8/23 ≈ 0.348
+          </div>
+        </div>
+        <p style="margin-top:10px;">يعني لو الشريحة بايظة، احتمال إنها من الصندوق 2 = <strong class="hl">34.8%</strong></p>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="div page-break">
+
+  <!-- =================== 1.8 =================== -->
+  <section class="sec">
+    <div class="sec-head">
+      <div class="sec-num">1.8</div>
+      <div>
+        <div class="sec-sub">🔗 الأحداث المستقلة</div>
+        <div class="sec-ttl">Independent Events — لما حدث مش بيأثر في التاني خالص</div>
+      </div>
+    </div>
+
+    <div class="tip teal">
+      <div class="ti">💡</div>
+      <div class="tb">
+        <div class="tl">بكلام عادي:</div>
+        A و B مستقلان لو <strong>حدوث أو عدم حدوث A مش بيغير من احتمال B خالص</strong> — والعكس بالعكس.<br>
+        مثال: لو رميت عملة 3 مرات — نتيجة كل رمية مستقلة تماماً عن السابقة.
+      </div>
+    </div>
+
+    <div class="def">
+      <div class="def-body">
+        <strong> القانون بتاعنا :</strong><br>
+        A و B مستقلان إذا:
+        <div class="def-formula">P(A ∩ B) = P(A) · P(B)</div>
+        لو الشرط ده مش محقق → A و B <strong>مترابطان (Dependent)</strong>
+      </div>
+    </div>
+
+    <div class="tip blue">
+      <div class="ti">🔑</div>
+      <div class="tb">
+        <div class="tl">علاقة بConditional Probability</div>
+       لو A و B مستقلان : P(A|B) = P(A) &nbsp; <strong>و</strong> &nbsp; P(B|A) = P(B)<br>
+        يعني معرفتك إن B حصل مش بتغير احتمال A.
+      </div>
+    </div>
+
+    <!-- Ex 1.17 -->
+    <div class="ex-box">
+      <div class="ex-hd"><span class="ex-num">Ex 1.17</span>عملة 3 مرات و عايز يعرف Dependent ولا لا</div>
+      <div class="ex-bd">
+        <div class="ex-q">
+          عملة عادلة اتقلبت 3 مرات:<br>
+          A = وجه في أول رميتين = {HHH, HHT}<br>
+          B = كتابة في الرمية الثالثة = {HHT, HTT, THT, TTT}<br>
+          C = بالظبط 2 كتابة في الـ3 رميات = {HTT, THT, TTH}<br>
+          <strong>a)</strong> هل A و B مستقلان؟ &nbsp;&nbsp;&nbsp; <strong>b)</strong> هل B و C مستقلان؟
+        </div>
+        <div class="sol-tag">✅ الحل</div>
+        <div class="ss">S = {HHH, HHT, HTH, THH, HTT, THT, TTH, TTT} → N = 8</div>
+
+        <div class="tip blue" style="margin:12px 0;">
+          <div class="ti">🔢</div>
+          <div class="tb">
+            <strong>نحسب الاحتمالات الأساسية:</strong><br>
+            P(A) = 2/8 = 1/4 &nbsp;&nbsp; P(B) = 4/8 = 1/2 &nbsp;&nbsp; P(C) = 3/8<br>
+            A ∩ B = {HHT} → P(A ∩ B) = 1/8<br>
+            B ∩ C = {HTT, THT} → P(B ∩ C) = 2/8 = 1/4
+          </div>
+        </div>
+
+        <div class="g2">
+          <div class="tip green" style="margin:0;">
+            <div class="ti">✅</div>
+            <div class="tb">
+              <div class="tl">a) A و B مستقلان:</div>
+              P(A) × P(B) = 1/4 × 1/2 = 1/8<br>
+              P(A ∩ B) = 1/8<br>
+              <strong>الاتنين متساويان → مستقلان ✓</strong>
+            </div>
+          </div>
+          <div class="tip red" style="margin:0;">
+            <div class="ti">❌</div>
+            <div class="tb">
+              <div class="tl">b) B و C مترابطان:</div>
+              P(B) × P(C) = 1/2 × 3/8 = 3/16<br>
+              P(B ∩ C) = 1/4 = 4/16<br>
+              <strong>3/16 ≠ 4/16 → مترابطان ✗</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Independence for 3 events -->
+    <div class="thm">
+      <div class="thm-hd">📌 inDependent  ل 3 أحداث أو أكتر</div>
+      <div class="thm-bd">
+        <p>لـ 3 أحداث A, B, C نقول إنهم مستقلين لو <strong>كل</strong> الشروط دي اتحققت:</p>
+        <div class="fml">
+          <div class="fml-eq" style="font-size:16px; line-height:2.4;">
+            P(A∩B)=P(A)·P(B) &nbsp;&nbsp; P(A∩C)=P(A)·P(C) &nbsp;&nbsp; P(B∩C)=P(B)·P(C)
+            <br>P(A∩B∩C) = P(A) · P(B) · P(C)
+          </div>
+        </div>
+        <div class="tip red" style="margin-top:12px;">
+          <div class="ti">⚠️</div>
+          <div class="tb">
+            <div class="tl">تحذير مهم جداً:</div>
+            ممكن كل اتنين مستقلين (Pairwise Independent) لكن الـ3 مع بعض مش مستقلين.
+            لازم تتحقق <strong>كل</strong> الشروط الأربعة.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip green">
+      <div class="ti">🎲</div>
+      <div class="tb">
+        <div class="tl">without replacement ..v.s.. with replacement :</div>
+        <div class="g2">
+          <div>
+            <strong>مع الإرجاع (with replacement):</strong><br>
+            كل سحبة مستقلة عن التانية ( Independent)<br>
+            P(3 معيبين من 20، فيهم 5 معيبين)<br>
+            = (5/20)³ = (1/4)³ = <strong>1/64</strong>
+          </div>
+          <div>
+            <strong>بدون إرجاع (without replacement): </strong><br>
+            الأحداث مترابطة ( Dependent)<br>
+            P(3 معيبين من 20، فيهم 5 معيبين)<br>
+            = (5/20)(4/19)(3/18) = <strong>1/114</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="div">
+
+  <!-- =================== SUMMARY =================== -->
+  <section class="sec">
+    <div class="sec-head">
+      <div class="sec-num">📋</div>
+      <div>
+        <div class="sec-ttl">SUMMARY نهائي — لكل حاجة </div>
+        <div class="sec-sub">صلي علي النبي عليه افضل الصلاة و السلام❤ ❤</div>
+      </div>
+    </div>
+
+    <div class="sum">
+      <h3>🏆 القوانين الأساسية — لازم تحفظها كلها</h3>
+      <ul class="sum-list">
+        <li><span class="bul">①</span><div><strong>Classical Probability :</strong> P(A) = n(A) / N</div></li>
+        <li><span class="bul">②</span><div><strong>Complementary Event</strong> P(Ā) = 1 - P(A)</div></li>
+        <li><span class="bul">③</span><div><strong>قانون الجمع لأي حدثين:</strong> P(A∪B) = P(A) + P(B) - P(A∩B)</div></li>
+        <li><span class="bul">④</span><div><strong>Conditional Probability</strong> P(A|B) = P(A∩B) / P(B)</div></li>
+        <li><span class="bul">⑤</span><div><strong>قانون الضرب:</strong> P(A∩B) = P(A) · P(B|A)</div></li>
+        <li><span class="bul">⑥</span><div><strong>Total Probability</strong> P(A) = Σ P(Bᵢ) · P(A|Bᵢ)</div></li>
+        <li><span class="bul">⑦</span><div><strong>نظرية بايز:</strong> P(Bᵣ|A) = P(Bᵣ)·P(A|Bᵣ) / P(A)</div></li>
+        <li><span class="bul">⑧</span><div><strong> Independent:</strong> P(A∩B) = P(A) · P(B)</div></li>
+      </ul>
+    </div>
+
+    <div class="tip gold">
+      <div class="ti">❤</div>
+      <div class="tb">
+        <div class="tl">و بس كدة خلصنا و شكرا ليكم ❤❤</div>
+         الامثلة اللي في الملخص من pdf الشابتر بس هنا مشروحة و محلولة بالعربي <br>
+         ان شاء الله هيكون في اسئلة علي الشابتر بكرة <br>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+</main>
+
+<footer class="ftr">
+  <div class="au">✍️ By: Eng / Moataz</div>
+  <div>دعوة حلوة لأخوك بقي لو استفادت او لا ❤😂</div>
+  <div style="margin-top:6px;font-size:12px;opacity:.5;"></div>
+</footer>
+
+</body>
+</html>
